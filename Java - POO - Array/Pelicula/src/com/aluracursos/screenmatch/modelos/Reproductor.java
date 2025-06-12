@@ -1,6 +1,8 @@
 package com.aluracursos.screenmatch.modelos;
 
-public class Reproductor {
+import java.util.Collections;
+
+public class Reproductor implements Comparable<Reproductor>{
     //Atributos
     private String nombre;
     private int fechaDeLanzamiento;
@@ -67,5 +69,11 @@ public class Reproductor {
 
     public double calcuandoMedia(){
         return sumaDeLasEvaluaciones / cantidadDeEvaluacion;
+    }
+
+    @Override
+    public int compareTo(Reproductor otroReproducto) {
+        //this.getNombre() - comparamos - con otroNombre de la lista
+        return this.getNombre().compareTo(otroReproducto.getNombre());
     }
 }

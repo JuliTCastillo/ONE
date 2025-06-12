@@ -47,4 +47,5 @@ public class Serie extends Reproductor{
         //super hacer referencia a que hacemos referencia de nuestra clase padre
         return "Serie: " + this.getNombre() + " (" + this.getFechaDeLanzamiento() + ")";
     }
+
 }

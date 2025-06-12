@@ -5,6 +5,8 @@ import com.aluracursos.screenmatch.modelos.Reproductor;
 import com.aluracursos.screenmatch.modelos.Serie;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PrincipalConLista {
     public static void main(String[] args) {
@@ -36,5 +38,30 @@ public class PrincipalConLista {
             }
 
         }
+
+        //Creamos la lista
+        ArrayList<String> listaDeArtista = new ArrayList<>();
+        listaDeArtista.add("Penelope Cruz");
+        listaDeArtista.add("Antonio Banderas");
+        listaDeArtista.add("Ricardo Darin");
+
+        System.out.println("Lista de Artistas NO ordenada " + listaDeArtista);
+        //Ordenamiento de lista
+        Collections.sort(listaDeArtista);
+        System.out.println("Lista de Artistas ordenada " + listaDeArtista);
+
+        System.out.println("Lista de pelicula No ordenada " + lista);
+        Collections.sort(lista);
+        System.out.println("Lista de pelicula ordenada " + lista);
+
+        /* * ORDENAMIENTO DE FECHA DE LANZAMIENTO * *
+        * Usamos el sort que pasamos como parametros a Comparartor
+        * hacemos uso de comparing en donde debemos indicar que clase padre
+        * para pasarle la fecha de lanzamiento
+        * */
+        lista.sort(Comparator.comparing(Reproductor::getFechaDeLanzamiento));
+        System.out.println("Lista de pelicula y Serie por fecha? " + lista);
+
+
     }
 }
