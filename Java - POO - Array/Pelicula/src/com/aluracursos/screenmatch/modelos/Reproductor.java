@@ -7,9 +7,7 @@ import java.util.Collections;
 
 public class Reproductor implements Comparable<Reproductor>{
     //Atributos
-    @SerializedName("Title")
     private String nombre;
-    @SerializedName("Year")
     private int fechaDeLanzamiento;
     private int duracionEnMinuto;
     private boolean incluidaEnElPlan;
@@ -101,10 +99,9 @@ public class Reproductor implements Comparable<Reproductor>{
 
     @Override
     public String toString() {
-        return "Reproductor{" +
-                "fechaDeLanzamiento=" + fechaDeLanzamiento +
-                ", nombre='" + nombre + '\'' +
+        return "(nombre = " + nombre +
+                ", fecha De Lanzamiento=" + fechaDeLanzamiento +
                 ", duracion= "+ duracionEnMinuto +
-                '}';
+                ")";
     }
 }

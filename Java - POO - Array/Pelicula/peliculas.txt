@@ -1,1 +1,18 @@
-Reproductor{fechaDeLanzamiento=1993, nombre='Matrix', duracion= 60}
+[
+  {
+    "Nombre": "Matrix",
+    "FechaDeLanzamiento": 1993,
+    "DuracionEnMinuto": 60,
+    "IncluidaEnElPlan": false,
+    "SumaDeLasEvaluaciones": 0.0,
+    "CantidadDeEvaluacion": 0
+  },
+  {
+    "Nombre": "Encanto",
+    "FechaDeLanzamiento": 2021,
+    "DuracionEnMinuto": 102,
+    "IncluidaEnElPlan": false,
+    "SumaDeLasEvaluaciones": 0.0,
+    "CantidadDeEvaluacion": 0
+  }
+]
