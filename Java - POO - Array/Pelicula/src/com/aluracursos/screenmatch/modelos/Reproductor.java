@@ -1,10 +1,15 @@
 package com.aluracursos.screenmatch.modelos;
 
+import com.aluracursos.screenmatch.excepcion.ErrorEnConversionDeDuracionException;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Collections;
 
 public class Reproductor implements Comparable<Reproductor>{
     //Atributos
+    @SerializedName("Title")
     private String nombre;
+    @SerializedName("Year")
     private int fechaDeLanzamiento;
     private int duracionEnMinuto;
     private boolean incluidaEnElPlan;
@@ -15,6 +20,23 @@ public class Reproductor implements Comparable<Reproductor>{
     public Reproductor(String nombre, int fechaDeLanzamiento) {
         this.nombre = nombre;
         this.fechaDeLanzamiento = fechaDeLanzamiento;
+    }
+
+    public Reproductor(ReproductorOmdb peli) {
+        this.nombre = peli.title();
+        //Usamos Integer.valueOf() porque estamos recibiendo los datos en STRING
+        this.fechaDeLanzamiento = Integer.valueOf(peli.year());
+        //Validamos la entrada de 'N/A'
+        if(peli.runtime().contains("N/A")){
+            //si es cierto, lanzamos un error
+            throw new ErrorEnConversionDeDuracionException("No pude convertir la duracion, "+
+                    "porque contiene un 'N/A'");
+        }
+        this.duracionEnMinuto = Integer.valueOf(
+                //Lo que hacemos es intentar convertir 3 caracteres a números,
+                //En el caso de que tenga dos dígitos, reemplazamos el espacio por nada
+                peli.runtime().substring(0, 3).replace(" ", "")
+        );
     }
 
     //Setter
@@ -75,5 +97,14 @@ public class Reproductor implements Comparable<Reproductor>{
     public int compareTo(Reproductor otroReproducto) {
         //this.getNombre() - comparamos - con otroNombre de la lista
         return this.getNombre().compareTo(otroReproducto.getNombre());
+    }
+
+    @Override
+    public String toString() {
+        return "Reproductor{" +
+                "fechaDeLanzamiento=" + fechaDeLanzamiento +
+                ", nombre='" + nombre + '\'' +
+                ", duracion= "+ duracionEnMinuto +
+                '}';
     }
 }
