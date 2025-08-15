@@ -10,10 +10,7 @@ import com.aluracursos.screenmatch.service.ConvierteDatos;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -66,7 +63,11 @@ public class Principal {
         System.out.println("TOP 5 EPISODIOS");
         datosEpisodios.stream()
                 .filter(e -> !e.evaluacion().equals("N/A"))
+                //.peek(e -> System.out.println("Primer filtro (N/A) " + e))
                 .sorted(Comparator.comparing(DatosEpisodio::evaluacion).reversed()) //ordenamos segun su evaluacion e invertimos para obtener mayor a menor
+                //.peek(e -> System.out.println("Ordenamiento de (M>m) " + e))
+                .map(e-> e.titulo().toUpperCase())
+                //.peek(e -> System.out.println("tercer filtro Mayusculas" + e))
                 .limit(5);
                 //.forEach(System.out::println);
 
@@ -77,12 +78,13 @@ public class Principal {
                                 .map(d-> new Episodio(t.numero(), d))
                 )
                 .sorted(Comparator.comparing(Episodio::getEvaluacion).reversed()) //ordenamos segun su evaluacion e invertimos para obtener mayor a menor
-                .limit(5)
+                //.limit(5)
                 .collect(Collectors.toList());
 
-        episodios.forEach(System.out::println);
+        //episodios.forEach(System.out::println);
 
         //Busqueda de episodios segun un año
+        /*
         System.out.println("Indica el año que quiere ver los episodios: ");
         var fecha = teclado.nextInt();
         teclado.nextLine();
@@ -97,7 +99,37 @@ public class Principal {
                                 "Episodio " + e.getTitulo() +
                                 "Fecha de Lanzamiento " + e.getFechaDeLanzamiento().format(dtf)
                 ));
+        */
 
+        //Busca episodios por titulo
+        /*System.out.println("Ingrese una parte del titulo del episodio que quiere buscar: ");
+        var parteDelTitulo = teclado.nextLine();
+        Optional<Episodio> episodioBuscado =  episodios.stream()
+                //Filtramos por episodio, obtenemos el titulo y vamos a seleccionar aquellos que tenga una coincidencia con lo que el usuario ingreso
+                .filter(e-> e.getTitulo().toUpperCase().contains(parteDelTitulo.toUpperCase()))
+                .findFirst(); //Va a buscar la coincidencia
+
+        if(episodioBuscado.isPresent()){
+            System.out.println("Episodio encontrado: ");
+            System.out.println("Los datos son : " + episodioBuscado.get());
+        }
+        else {
+            System.out.println("Episodio no encontrado! ");
+        }*/
+
+        Map<Integer, Double> evaluacionesPorTemporada = episodios.stream()
+                .filter(e-> e.getEvaluacion() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada, Collectors.averagingDouble(Episodio::getEvaluacion)));
+
+        System.out.println(evaluacionesPorTemporada);
+
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e-> e.getEvaluacion() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getEvaluacion));
+
+        System.out.println("Media de las evaluaciones: " + est.getAverage());
+        System.out.println("Episodio Mejor evaluado: " + est.getMax());
+        System.out.println("Episodio Peor evaluado: " + est.getMin());
 
     }
 
